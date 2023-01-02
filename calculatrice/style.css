@@ -1,0 +1,19 @@
+#nombres
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+#operations
+{
+    display: grid;
+    grid-template-columns: 1fr; 
+}
+#calculette
+{
+    display: flex ;
+    
+    justify-content:center;
+    border : solid black;
+    padding: 2%;
+    margin: 20%;
+}
