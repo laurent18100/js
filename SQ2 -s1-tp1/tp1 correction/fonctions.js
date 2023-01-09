@@ -1,70 +1,83 @@
-/** exo1
- * change la couleur du background du body, accédé via le dom
- * @param {*} pEvent événement click récupéré lors de l'appel
+/**
+ * en fonction du mode demandé, elle change le mode de couleur
  */
- function changerCouleurAlea(pEvent)
- {
-     document.body.style.backgroundColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16)
- }
- /** exo 2
-  * passe du blanc au noir et du noir au blanc
-  * @param {*} pEvent événement click récupéré lors de l'appel
-  */
- function changerDarkLightMode(pEvent)
- {
-     // document.body.style.backgroundColor=="white"?document.body.style.backgroundColor = "black":document.body.style.backgroundColor = "white";
-     // document.body.style.backgroundColor=="white"?document.body.style.color = "black":document.body.style.color = "white";
+ function changerDarkMode(pDarkModeActif) {
+    if (pDarkModeActif == true) {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+       // document.cookie = "darkModeActif=false;max-age=60*60";
+       //sessionStorage.setItem("darkModeActif",false)
+       localStorage.setItem("darkModeActif",false)
+       //sessionStorage.setItem("style",JSON.stringify(document.body.style))
+    }
+    else {
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+        //document.cookie = "darkModeActif=true;max-age=60*60";
+        //sessionStorage.setItem("darkModeActif",true)
+        localStorage.setItem("darkModeActif",true)
+        //sessionStorage.setItem("style",JSON.stringify(document.body.style))
+    }
+}
+/**
+ * Cette fonction est appelée lors du click sur le bouton.
+ * Elle détermine si le dark mode est actif en vérifiant la couleur de fond
+ * elle appelle alors le changement de mode
+ * @param {*} pEvent 
+ */
+function changerModeAffichage(pEvent) {
+    console.log('changerModeAffichage');
+    let etreEnDarkMode = (document.body.style.backgroundColor == "black")
+    console.log(etreEnDarkMode);
+    changerDarkMode(etreEnDarkMode);
+}
+/**
+ * Cette fonction est appelée lors du chargement de la page et restaure le dark mode activé
+ * @param {*} pDarkModeDemande 
+ */
+function activerDarkMode() {
+    //récupérer le dark mode depuis le cookie
+    console.log(sessionStorage.getItem('darkModeActif'));
+   // console.log(sessionStorage.getItem('style'));
+   // let etreEnDarkMode = getCookie('darkModeActif');
+   //let etreEnDarkMode = sessionStorage.getItem('darkModeActif');
+   let etreEnDarkMode = localStorage.getItem('darkModeActif');
+   
+    if (etreEnDarkMode == 'true') {
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+    }
+    else {
+
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+    }
+}
+
+
+
+function  getCookie(pName){
+    if(document.cookie.length == 0)
+      return 'false';
+    let regSepCookie = new RegExp('(; )', 'g');
+    console.log(regSepCookie);
+    let cookies = document.cookie.split(regSepCookie);
+    console.log(cookies);
+    for(let i = 0; i < cookies.length; i++){
+        let regInfo = new RegExp('=', 'g');
+        let infos = cookies[i].split(regInfo);
+        console.log(infos);
+      if(infos[0] == pName){
+        return decodeURI(infos[1]);
+      }
+    }
+    return 'false';
+  }
+
+  function oublier(pEvent)
+  {
+    console.log('JE PERDS LA MEMOIREE HAAAAAAAA.... je suis en pls');
+    localStorage.clear();
+    console.log(localStorage.getItem('darkModeActif'));
+  }
  
-      if (document.body.style.backgroundColor=="white")
-          {
-              document.body.style.backgroundColor = "black";
-              document.body.style.color = "white";
-          }
-          else
-          {
-              document.body.style.backgroundColor = "white";
-              document.body.style.color = "black";
-          }
- }
- 
- function ajouterTitre(pEvent)
- {
-     console.log('ajouter un titre');
-     let newH1 = document.createElement("h1");
-     let titre = prompt('Nouveau titre?');
-     newH1.innerText = titre;
-     let parent = document.querySelector('main');
-     parent.appendChild(newH1);
- }
- 
- function masquerAfficher(pId)
- {
-     console.log('masquerAfficher:'+pId);
-     let element = document.querySelector('#'+pId);
-     element.style.display=="none"?element.style.display="block":element.style.display="none"
- }
- function masquerAfficherPara(event)
- {
-     console.log(event);
-     masquerAfficher(event.srcElement.value)
- }
- function ajouterParagraphe(pEvent)
- {
-     console.log('ajouter un paragraphe n°'+nbParagraphe);
-     //creer le paragraphe
-     let newPara = document.createElement("p");
-     let texte = prompt('Saisisse le texte du paragraphe?');
-     newPara.innerText = texte;
-     newPara.style.display="block";
-     newPara.id="para"+nbParagraphe;
- // creer le bouton
-     let newBouton = document.createElement('button');
-     newBouton.innerText =" masquer/afficher";
-     newBouton.value="para"+nbParagraphe;
-     newBouton.addEventListener('click',masquerAfficherPara)
- 
-     let parent = document.querySelector('main');
-     parent.appendChild(newPara);
-     parent.appendChild(newBouton);
-     nbParagraphe++;
- }

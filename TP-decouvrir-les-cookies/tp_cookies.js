@@ -14,7 +14,7 @@ function DarkLightMode(pEvent)
             document.body.style.color = "black";
         }
 }
-function Dark/light(pId)
+function Dark/DarkLight(pId)
 {
     console.log('Dark/light:'+pId);
     let element = document.querySelector('#'+pId);
