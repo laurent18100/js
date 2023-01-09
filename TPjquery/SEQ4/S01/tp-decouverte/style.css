@@ -4,6 +4,24 @@
 }
 
 #contenu {
-    background-color: whitesmoke;
+     
+    background-color: rgb(254, 44, 44);
+    
     display: none;
+ 
+
 }
+/*
+#image{
+    border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
+}
+
+/*a essayer*/
+/*main{
+    border: 5px;
+    border-color: red yellow green transparent;
+
+
+   
+}
+*/
